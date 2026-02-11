@@ -1,32 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>AlgoTN.cc</title>
+  <title>AlgoTN.cc | Intelligent Solutions</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+  
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-              url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600');
-  background-size: cover;
-  background-position: center;
-  color: white; /* Makes text white so it's readable */
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                  url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      /* Glassmorphism Effect */
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 60px 40px;
+      border-radius: 24px;
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #fff, #888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #ccc;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    button {
+      padding: 16px 45px;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: white;
+      color: black;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    button:hover {
+      background: #00d2ff;
+      color: white;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    }
+
+    /* Subtle Entry Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
-
 <div class="container">
   <h1>AlgoTN.cc</h1>
-  <p>Providing intelligent algorithmic solutions.</p>
-  <button onclick="window.voiceflow.chat.open()">Chat With Us</button>
+  <p>Harnessing advanced algorithms to solve complex problems. Intelligent. Efficient. Scalable.</p>
+  <button onclick="window.voiceflow.chat.open()">Connect With AI</button>
 </div>
 
 <script type="text/javascript">
@@ -45,5 +110,6 @@
       v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
+
 </body>
 </html>
