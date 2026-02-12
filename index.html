@@ -126,32 +126,23 @@
   (function(d, t) {
       var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
       v.onload = function() {
-        // SAFETY WRAPPER: Prevents Voiceflow internal errors from breaking your site
-        window.addEventListener('error', function(e) {
-          if (e.message.indexOf('share-modal') > -1) {
-            e.stopImmediatePropagation();
-          }
-        }, true);
-
         window.voiceflow.chat.load({
           verify: { projectID: '698b264471c5be5fc9494862' },
           url: 'https://general-runtime.voiceflow.com',
           versionID: 'production'
         }).then(() => {
-          console.log("Voiceflow loaded successfully");
+          console.log("Chat loaded successfully!");
           
-          // Auto-open logic
-          const urlParams = new URLSearchParams(window.location.search);
-          if (urlParams.get('chat') === 'true') {
-            setTimeout(() => {
-              if (window.voiceflow && window.voiceflow.chat) {
-                window.voiceflow.chat.open();
-              }
-            }, 1000); // 1 second delay is safer for mobile
+          // Simplified Auto-Open
+          if (window.location.search.includes('chat=true')) {
+            setTimeout(function() {
+              window.voiceflow.chat.open();
+            }, 1500); // 1.5 second delay to let everything settle
           }
         });
       }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+      // WE ARE USING THE STABLE BUNDLE HERE
+      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
       v.type = "text/javascript"; 
       s.parentNode.insertBefore(v, s);
   })(document, 'script');
