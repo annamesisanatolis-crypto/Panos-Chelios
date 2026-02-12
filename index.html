@@ -131,11 +131,18 @@
           url: 'https://general-runtime.voiceflow.com',
           versionID: 'production'
         }).then(() => {
-          // Check if the URL has "?chat=true" at the end
-          const urlParams = new URLSearchParams(window.location.search);
-          if (urlParams.get('chat') === 'true') {
-            window.voiceflow.chat.open();
-          }
+          // 1. Wait for the widget to be fully initialized
+          window.voiceflow.chat.onReady(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // 2. If the URL has ?chat=true, open it
+            if (urlParams.get('chat') === 'true') {
+              // A tiny 500ms delay helps ensure the UI is ready to pop up
+              setTimeout(() => {
+                window.voiceflow.chat.open();
+              }, 500);
+            }
+          });
         });
       }
       v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
