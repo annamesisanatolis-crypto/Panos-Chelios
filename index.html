@@ -131,25 +131,28 @@
           url: 'https://general-runtime.voiceflow.com',
           versionID: 'production'
         }).then(() => {
-          const urlParams = new URLSearchParams(window.location.search);
-          
-          if (urlParams.get('chat') === 'true') {
-            // This "Poller" checks if the chat tool is ready to be opened
-            let attempts = 0;
-            const forceOpen = setInterval(() => {
-              attempts++;
-              if (window.voiceflow && window.voiceflow.chat && typeof window.voiceflow.chat.open === 'function') {
-                window.voiceflow.chat.open();
-                clearInterval(forceOpen); // Stop checking once it's open
-              }
-              if (attempts > 10) clearInterval(forceOpen); // Stop after 5 seconds if it fails
-            }, 500);
-          }
+          // This function checks for the URL parameter
+          const checkChatTrigger = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('chat') === 'true') {
+              // We use a small loop to "punch through" any loading delays
+              let count = 0;
+              const opener = setInterval(() => {
+                if (window.voiceflow?.chat?.open) {
+                  window.voiceflow.chat.open();
+                  clearInterval(opener);
+                }
+                if (count++ > 20) clearInterval(opener); // Stop after 10 seconds
+              , 500);
+            }
+          };
+
+          // Run the check
+          checkChatTrigger();
         });
       }
       v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
-
 </body>
 </html>
