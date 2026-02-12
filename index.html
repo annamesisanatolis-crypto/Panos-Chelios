@@ -129,8 +129,13 @@
         window.voiceflow.chat.load({
           verify: { projectID: '698b264471c5be5fc9494862' },
           url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: { url: "https://runtime-api.voiceflow.com" }
+          versionID: 'production'
+        }).then(() => {
+          // Check if the URL has "?chat=true" at the end
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('chat') === 'true') {
+            window.voiceflow.chat.open();
+          }
         });
       }
       v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
