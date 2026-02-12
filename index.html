@@ -126,32 +126,34 @@
   (function(d, t) {
       var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
       v.onload = function() {
+        // SAFETY WRAPPER: Prevents Voiceflow internal errors from breaking your site
+        window.addEventListener('error', function(e) {
+          if (e.message.indexOf('share-modal') > -1) {
+            e.stopImmediatePropagation();
+          }
+        }, true);
+
         window.voiceflow.chat.load({
           verify: { projectID: '698b264471c5be5fc9494862' },
           url: 'https://general-runtime.voiceflow.com',
           versionID: 'production'
         }).then(() => {
-          // This function checks for the URL parameter
-          const checkChatTrigger = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('chat') === 'true') {
-              // We use a small loop to "punch through" any loading delays
-              let count = 0;
-              const opener = setInterval(() => {
-                if (window.voiceflow?.chat?.open) {
-                  window.voiceflow.chat.open();
-                  clearInterval(opener);
-                }
-                if (count++ > 20) clearInterval(opener); // Stop after 10 seconds
-              , 500);
-            }
-          };
-
-          // Run the check
-          checkChatTrigger();
+          console.log("Voiceflow loaded successfully");
+          
+          // Auto-open logic
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('chat') === 'true') {
+            setTimeout(() => {
+              if (window.voiceflow && window.voiceflow.chat) {
+                window.voiceflow.chat.open();
+              }
+            }, 1000); // 1 second delay is safer for mobile
+          }
         });
       }
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; 
+      v.type = "text/javascript"; 
+      s.parentNode.insertBefore(v, s);
   })(document, 'script');
 </script>
 </body>
